@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQS_Operator_list_getter", "SQS_Operator_list_getter.csproj", "{70B70499-A0FA-4BE8-BA1B-3339A1346456}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70B70499-A0FA-4BE8-BA1B-3339A1346456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70B70499-A0FA-4BE8-BA1B-3339A1346456}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70B70499-A0FA-4BE8-BA1B-3339A1346456}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70B70499-A0FA-4BE8-BA1B-3339A1346456}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0329B023-3DC5-43B0-B61D-CE6D6B35E8E2}
+	EndGlobalSection
+EndGlobal
