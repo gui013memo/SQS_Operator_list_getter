@@ -34,9 +34,11 @@
             menuStrip1 = new MenuStrip();
             optionsToolStripMenuItem = new ToolStripMenuItem();
             configureDirectoryToolStripMenuItem = new ToolStripMenuItem();
+            sourceToolStripMenuItem = new ToolStripMenuItem();
+            outputToolStripMenuItem = new ToolStripMenuItem();
             checkCurrentDirToolStripMenuItem = new ToolStripMenuItem();
-            aboutToolStripMenuItem = new ToolStripMenuItem();
             clearConsoleToolStripMenuItem = new ToolStripMenuItem();
+            aboutToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -87,10 +89,24 @@
             // 
             // configureDirectoryToolStripMenuItem
             // 
+            configureDirectoryToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { sourceToolStripMenuItem, outputToolStripMenuItem });
             configureDirectoryToolStripMenuItem.Name = "configureDirectoryToolStripMenuItem";
             configureDirectoryToolStripMenuItem.Size = new Size(244, 26);
             configureDirectoryToolStripMenuItem.Text = "Configure directory";
-            configureDirectoryToolStripMenuItem.Click += configureDirectoryToolStripMenuItem_Click;
+            // 
+            // sourceToolStripMenuItem
+            // 
+            sourceToolStripMenuItem.Name = "sourceToolStripMenuItem";
+            sourceToolStripMenuItem.Size = new Size(224, 26);
+            sourceToolStripMenuItem.Text = "Source";
+            sourceToolStripMenuItem.Click += sourceToolStripMenuItem_Click;
+            // 
+            // outputToolStripMenuItem
+            // 
+            outputToolStripMenuItem.Name = "outputToolStripMenuItem";
+            outputToolStripMenuItem.Size = new Size(224, 26);
+            outputToolStripMenuItem.Text = "Output";
+            outputToolStripMenuItem.Click += outputToolStripMenuItem_Click;
             // 
             // checkCurrentDirToolStripMenuItem
             // 
@@ -99,19 +115,19 @@
             checkCurrentDirToolStripMenuItem.Text = "Check current directory";
             checkCurrentDirToolStripMenuItem.Click += checkCurrentDirToolStripMenuItem_Click;
             // 
-            // aboutToolStripMenuItem
-            // 
-            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(64, 24);
-            aboutToolStripMenuItem.Text = "About";
-            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
-            // 
             // clearConsoleToolStripMenuItem
             // 
             clearConsoleToolStripMenuItem.Name = "clearConsoleToolStripMenuItem";
             clearConsoleToolStripMenuItem.Size = new Size(244, 26);
             clearConsoleToolStripMenuItem.Text = "Clear Console";
             clearConsoleToolStripMenuItem.Click += clearConsoleToolStripMenuItem_Click;
+            // 
+            // aboutToolStripMenuItem
+            // 
+            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            aboutToolStripMenuItem.Size = new Size(64, 24);
+            aboutToolStripMenuItem.Text = "About";
+            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // mainForm
             // 
@@ -142,5 +158,7 @@
         private ToolStripMenuItem checkCurrentDirToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem clearConsoleToolStripMenuItem;
+        private ToolStripMenuItem sourceToolStripMenuItem;
+        private ToolStripMenuItem outputToolStripMenuItem;
     }
 }

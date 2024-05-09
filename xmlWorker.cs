@@ -51,7 +51,7 @@ namespace SQS_Operator_list_getter
         public string Text { get; set; }
 
         [XmlElement(ElementName = "group")]
-        public List<Group> group { get; set; }
+        public List<Group> subGroups { get; set; }
     }
 
     [XmlRoot(ElementName = "data")]
@@ -59,7 +59,7 @@ namespace SQS_Operator_list_getter
     {
 
         [XmlElement(ElementName = "group")]
-        public Group Group { get; set; }
+        public Group Keys { get; set; }
     }
 
     [XmlRoot(ElementName = "message")]

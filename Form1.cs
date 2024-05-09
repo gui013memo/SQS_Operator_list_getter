@@ -1,19 +1,24 @@
 using System.IO;
 using System.Text;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace SQS_Operator_list_getter
 {
     public partial class mainForm : Form
     {
-        string currentPath = string.Empty;
-        string xmlFilePath = "C:\\Temp\\Worker.xml";
 
-        
+
+        string currentSourcePath = "C:\\AtlasCopco\\SQS\\LBMS\\modulexml";
+        string currentOutputPath = string.Empty;
+
+        SynatecLbMessage workerXML;
+
         public mainForm()
         {
             InitializeComponent();
-
+            workerXML = new SynatecLbMessage();
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
 
 
@@ -29,8 +34,8 @@ namespace SQS_Operator_list_getter
                 return null;
             }
         }
-        
-        private SynatecLbMessage getXMLData(string xmlFilePath)
+
+        public SynatecLbMessage getXMLData<SynatecLbMessage>(string xmlFilePath)
         {
             byte[] bytes = File.ReadAllBytes(xmlFilePath);
             byte[] bom = new byte[] { 0xEF, 0xBB, 0xBF };  // UTF-8 BOM
@@ -50,23 +55,73 @@ namespace SQS_Operator_list_getter
                 xmlText = xmlText.Substring(xmlDeclaration.Length);
             }
 
+
             XmlSerializer serializer = new XmlSerializer(typeof(SynatecLbMessage));
 
             using (StringReader reader = new StringReader(xmlText))
             {
                 var xmlFinal = (SynatecLbMessage)serializer.Deserialize(reader);
 
-                return xmlFinal;
+                consoleTextBox.Text += "Deserialize done";
 
-                
+                return xmlFinal;
             }
+        }
+
+        public void WriteToCsv(SynatecLbMessage xmlWorker, string csvFilePath)
+        {
+            StringBuilder csvContent = new StringBuilder();
+
+            // Add headers
+            csvContent.AppendLine("Name,id");  // Replace with your actual headers
+
+            // Add data
+            foreach (var group in xmlWorker.Message.Data.Keys.subGroups)   //ElementAt(0).group.ElementAt(0).Parameter)  // Replace with your actual data structure
+            {
+                foreach (var subgroup in group.subGroups)
+                {
+                    foreach (var parameter in subgroup.Parameter)
+                    {
+                        csvContent.AppendLine($"{parameter.Text},{parameter.Id}");
+                    }
+                }
+            }
+
+            consoleTextBox.Text += "Write to CSV done at path: \r\n" + csvFilePath;
+            File.WriteAllText(csvFilePath, csvContent.ToString());
+        }
+
+        public bool NeedsEncodingCorrection(string input)
+        {
+            // List of characters that are commonly misinterpreted in a different encoding
+            string[] misinterpretedCharacters = new string[] { "Ã", "©", "ª", "«", "¬", "®", "¯", "°", "±", "²", "³", "´", "µ",
+                "¶", "·", "¹", "º", "»", "¼", "½", "¾", "¿", "À", "Á", "Â", "Ã", "Ä", "Å", "Æ", "Ç", "È", "É", "Ê", "Ë", "Ì",
+                "Í", "Î", "Ï", "Ð", "Ñ", "Ò", "Ó", "Ô", "Õ", "Ö", "×", "Ø", "Ù", "Ú", "Û", "Ü", "Ý", "Þ", "ß", "à", "á", "â",
+                "ã", "ä", "å", "æ", "ç", "è", "é", "ê", "ë", "ì", "í", "î", "ï", "ð", "ñ", "ò", "ó", "ô", "õ", "ö", "÷", "ø",
+                "ù", "ú", "û", "ü", "ý", "þ", "ÿ" };
+
+            foreach (string character in misinterpretedCharacters)
+            {
+                if (input.Contains(character))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public string CorrectEncoding(string input)
+        {
+            byte[] bytes = Encoding.Default.GetBytes(input);
+            return Encoding.GetEncoding("Windows-1252").GetString(bytes);
         }
 
         private void getOperatorListButton_Click(object sender, EventArgs e)
         {
+            workerXML = getXMLData<SynatecLbMessage>(currentSourcePath);
 
-
-            //consoleTextBox.Text = xmlFinal.Message.Data.Group.group.ElementAt(0).group.ElementAt(0).Parameter.ElementAt(0).Text;
+            WriteToCsv(workerXML, @"C:\Users\Admin\Desktop");
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -74,29 +129,22 @@ namespace SQS_Operator_list_getter
             MessageBox.Show("teste");
         }
 
-        private void configureDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            currentPath = ChooseFolder();
-
-            consoleTextBox.Text += "New current path: \r\n" + currentPath + "\r\n";
-        }
 
         private void checkCurrentDirToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            if (Directory.Exists(currentPath))
+            if (Directory.Exists(currentSourcePath))
             {
-                consoleTextBox.Text += "+OK Current path: \r\n" + currentPath + "\r\n";
+                consoleTextBox.Text += "+OK Current path: \r\n" + currentSourcePath + "\r\n";
             }
             else
             {
-                if (currentPath == "")
+                if (currentSourcePath == "")
                 {
                     consoleTextBox.Text += "Current path EMPTY! \r\n";
                 }
                 else
                 {
-                    consoleTextBox.Text += "-----NOK Current path: \r\n" + currentPath + "\r\n";
+                    consoleTextBox.Text += "-----NOK Current path: \r\n" + currentSourcePath + "\r\n";
                 }
             }
 
@@ -105,6 +153,20 @@ namespace SQS_Operator_list_getter
         private void clearConsoleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             consoleTextBox.Text = string.Empty;
+        }
+
+        private void sourceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            currentSourcePath = ChooseFolder();
+
+            consoleTextBox.Text += "New source path: \r\n" + currentSourcePath + "\r\n";
+        }
+
+        private void outputToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            currentOutputPath = ChooseFolder();
+
+            consoleTextBox.Text += "New output path: \r\n" + currentOutputPath + "\r\n";
         }
     }
 }
