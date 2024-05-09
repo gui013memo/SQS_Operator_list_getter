@@ -31,6 +31,13 @@
             getOperatorListButton = new Button();
             openOutputDirectoryButton = new Button();
             consoleTextBox = new TextBox();
+            menuStrip1 = new MenuStrip();
+            optionsToolStripMenuItem = new ToolStripMenuItem();
+            configureDirectoryToolStripMenuItem = new ToolStripMenuItem();
+            checkCurrentDirToolStripMenuItem = new ToolStripMenuItem();
+            aboutToolStripMenuItem = new ToolStripMenuItem();
+            clearConsoleToolStripMenuItem = new ToolStripMenuItem();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // getOperatorListButton
@@ -42,6 +49,7 @@
             getOperatorListButton.TabIndex = 0;
             getOperatorListButton.Text = "Get operator list";
             getOperatorListButton.UseVisualStyleBackColor = false;
+            getOperatorListButton.Click += getOperatorListButton_Click;
             // 
             // openOutputDirectoryButton
             // 
@@ -54,11 +62,56 @@
             // 
             // consoleTextBox
             // 
-            consoleTextBox.Location = new Point(12, 12);
+            consoleTextBox.Location = new Point(12, 43);
             consoleTextBox.Multiline = true;
             consoleTextBox.Name = "consoleTextBox";
-            consoleTextBox.Size = new Size(382, 351);
+            consoleTextBox.Size = new Size(382, 320);
             consoleTextBox.TabIndex = 2;
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.ImageScalingSize = new Size(20, 20);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem, aboutToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(406, 28);
+            menuStrip1.TabIndex = 3;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { configureDirectoryToolStripMenuItem, checkCurrentDirToolStripMenuItem, clearConsoleToolStripMenuItem });
+            optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            optionsToolStripMenuItem.Size = new Size(75, 24);
+            optionsToolStripMenuItem.Text = "Options";
+            // 
+            // configureDirectoryToolStripMenuItem
+            // 
+            configureDirectoryToolStripMenuItem.Name = "configureDirectoryToolStripMenuItem";
+            configureDirectoryToolStripMenuItem.Size = new Size(244, 26);
+            configureDirectoryToolStripMenuItem.Text = "Configure directory";
+            configureDirectoryToolStripMenuItem.Click += configureDirectoryToolStripMenuItem_Click;
+            // 
+            // checkCurrentDirToolStripMenuItem
+            // 
+            checkCurrentDirToolStripMenuItem.Name = "checkCurrentDirToolStripMenuItem";
+            checkCurrentDirToolStripMenuItem.Size = new Size(244, 26);
+            checkCurrentDirToolStripMenuItem.Text = "Check current directory";
+            checkCurrentDirToolStripMenuItem.Click += checkCurrentDirToolStripMenuItem_Click;
+            // 
+            // aboutToolStripMenuItem
+            // 
+            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            aboutToolStripMenuItem.Size = new Size(64, 24);
+            aboutToolStripMenuItem.Text = "About";
+            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
+            // 
+            // clearConsoleToolStripMenuItem
+            // 
+            clearConsoleToolStripMenuItem.Name = "clearConsoleToolStripMenuItem";
+            clearConsoleToolStripMenuItem.Size = new Size(244, 26);
+            clearConsoleToolStripMenuItem.Text = "Clear Console";
+            clearConsoleToolStripMenuItem.Click += clearConsoleToolStripMenuItem_Click;
             // 
             // mainForm
             // 
@@ -68,8 +121,12 @@
             Controls.Add(consoleTextBox);
             Controls.Add(openOutputDirectoryButton);
             Controls.Add(getOperatorListButton);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             Name = "mainForm";
             Text = "SQS Operator List Getter - v1.0";
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -79,5 +136,11 @@
         private Button getOperatorListButton;
         private Button openOutputDirectoryButton;
         private TextBox consoleTextBox;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem optionsToolStripMenuItem;
+        private ToolStripMenuItem configureDirectoryToolStripMenuItem;
+        private ToolStripMenuItem checkCurrentDirToolStripMenuItem;
+        private ToolStripMenuItem aboutToolStripMenuItem;
+        private ToolStripMenuItem clearConsoleToolStripMenuItem;
     }
 }
