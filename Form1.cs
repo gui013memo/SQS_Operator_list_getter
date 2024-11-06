@@ -9,8 +9,9 @@ namespace SQS_Operator_list_getter
     {
 
 
-        string currentSourcePath = "C:\\AtlasCopco\\SQS\\LBMS\\modulexml";
-        string currentOutputPath = string.Empty;
+        string currentSourcePath = @"C:\ProgramData\Atlas Copco\SQS\LBMS\modulexml\Worker.xml";
+        string currentOutputPath = @"C:\Temp";
+        //string currentOutputPath = string.Empty;// @"C\Temp";
 
         SynatecLbMessage workerXML;
 
@@ -88,7 +89,7 @@ namespace SQS_Operator_list_getter
             }
 
             consoleTextBox.Text += "Write to CSV done at path: \r\n" + csvFilePath;
-            File.WriteAllText(csvFilePath, csvContent.ToString());
+            File.WriteAllText(csvFilePath + "\\Xml-outrput.csv", csvContent.ToString());
         }
 
         public bool NeedsEncodingCorrection(string input)
@@ -121,7 +122,7 @@ namespace SQS_Operator_list_getter
         {
             workerXML = getXMLData<SynatecLbMessage>(currentSourcePath);
 
-            WriteToCsv(workerXML, @"C:\Users\Admin\Desktop");
+            WriteToCsv(workerXML, currentOutputPath);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
